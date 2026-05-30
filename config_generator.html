@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تولید فایل کانفیگ اپلیکیشن سوئیفت</title>
+        <!-- fa -->
+    <link rel="stylesheet" href="https://napix.ir/wp-content/fonts/font-awesome/css/all.min.css">
+    
+    <style>
+    
+            /* تعریف فونت Vazirmatn */
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Thin.woff2') format('woff2');
+            font-weight: 100;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Light.woff2') format('woff2');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Medium.woff2') format('woff2');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-SemiBold.woff2') format('woff2');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-ExtraBold.woff2') format('woff2');
+            font-weight: 800;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Black.woff2') format('woff2');
+            font-weight: 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face{
+            font-family:'Font Awesome 6 Free';
+            font-style:normal;
+            font-weight:900;
+            src:url(napix.ir/wp-content/fonts/font-awesome/webfonts/fa-solid-900.woff2) format("woff2"),
+                url(napix.ir/wp-content/fonts/font-awesome/webfonts/fa-solid-900.woff) format("woff")
+        }
+    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #7555b4 0%, #5e419a 100%);
+            color: white;
+            border-radius: 12px;
+/*             box-shadow: 0 6px 15px rgba(255, 139, 0, 0.2); */
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .wizard-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .wizard-progress {
+            display: flex;
+            background-color: #f0f4f8;
+            padding: 0;
+            counter-reset: step;
+        }
+        
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            padding: 18px 10px;
+            position: relative;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active {
+            color: #6345a0;
+            background-color: rgba(255, 139, 0, 0.08);
+        }
+        
+        .progress-step.completed {
+            color: #28a745;
+        }
+        
+        .progress-step::before {
+            counter-increment: step;
+            content: counter(step);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: #ddd;
+            color: #666;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active::before {
+            background-color: #6345a0;
+            color: white;
+        }
+        
+        .progress-step.completed::before {
+            background-color: #28a745;
+            color: white;
+            content: "✓";
+        }
+        
+        .wizard-content {
+            padding: 30px;
+        }
+        
+        .step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #444;
+            border-bottom: 2px solid #f0f4f8;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input[type="text"],
+        input[type="url"],
+        input[type="color"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #6345a0;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .checkbox-group input {
+            margin-left: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .dynamic-list {
+            border: 1px solid #e1e5eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .list-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-right: 3px solid #6345a0;
+        }
+        
+        .list-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .list-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background-color: #6345a0;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #421b8e;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+        
+        .btn-add {
+            background-color: #17a2b8;
+            color: white;
+            margin-top: 10px;
+        }
+        
+        .btn-add:hover {
+            background-color: #138496;
+        }
+        
+        .btn-remove {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+        
+        .wizard-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e5eb;
+        }
+        
+        .json-preview {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #e1e5eb;
+            direction: ltr;
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .json-key {
+            color: #d73a49;
+        }
+        
+        .json-value {
+            color: #032f62;
+        }
+        
+        .json-string {
+            color: #22863a;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .validation-error {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .wizard-progress {
+                flex-direction: column;
+            }
+            
+            .progress-step {
+                text-align: right;
+                padding: 15px;
+                display: flex;
+                align-items: center;
+            }
+            
+            .progress-step::before {
+                margin: 0 0 0 15px;
+                flex-shrink: 0;
+            }
+            
+            .wizard-content {
+                padding: 20px;
+            }
+            
+            .wizard-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .wizard-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-magic"></i>تولید فایل کانفیگ اپلیکیشن سوئیفت</h1>
+            <p>اطلاعات اپلیکیشن خود را در مراحل زیر وارد کنید و فایل JSON نهایی را دریافت نمایید</p>
+        </header>
+        
+        <div class="wizard-container">
+            <div class="wizard-progress">
+                <div class="progress-step active" data-step="1">اطلاعات پایه</div>
+                <div class="progress-step" data-step="2">حالت آفلاین</div>
+                <div class="progress-step" data-step="3">نوار بالا</div>
+                <div class="progress-step" data-step="4">منوی کشویی</div>
+                <div class="progress-step" data-step="5">نوار پیمایش پایین</div>
+                <div class="progress-step" data-step="6">پیش‌نمایش و تولید</div>
+            </div>
+            
+            <div class="wizard-content">
+                <form id="json-wizard-form">
+                    <!-- Step 1: Basic Info -->
+                    <div class="step active" id="step-1">
+                        <h2 class="step-title">اطلاعات پایه اپلیکیشن</h2>
+                        
+                        <div class="form-group">
+                            <label for="app_name">نام اپلیکیشن:</label>
+                            <input type="text" id="app_name" value="نام اپلیکیشن" required>
+                            <div class="validation-error" id="app_name_error">لطفاً نام اپلیکیشن را وارد کنید</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="brand_slogan">شعار برند:</label>
+                            <input type="text" id="brand_slogan" value="شعار برند شما">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="primary_color">رنگ اصلی:</label>
+                            <div style="display: flex; align-items: center;">
+                                <input type="color" id="primary_color" value="#6345a0" style="width: 60px; height: 45px; margin-left: 10px;">
+                                <input type="text" id="primary_color_text" value="#6345a0" style="flex-grow: 1;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Offline Mode -->
+                    <div class="step" id="step-2">
+                        <h2 class="step-title">تنظیمات حالت آفلاین</h2>
+                        
+                        <div class="form-group">
+                            <label for="offline_message">پیام حالت آفلاین:</label>
+                            <textarea id="offline_message">سلام ، در زمان قطع اینترنت می توانید سفارش های خود را از طریق تماس تلفنی یا صفحه روبیکا به آدرس زیر ثبت کنید:\n https://web.rubika.ir</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="btn_title">عنوان دکمه:</label>
+                            <input type="text" id="btn_title" value="تماس تلفنی">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="btn_link">لینک دکمه:</label>
+                            <input type="text" id="btn_link" value="tel:09121234567">
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: App Bar -->
+                    <div class="step" id="step-3">
+                        <h2 class="step-title">تنظیمات نوار اپلیکیشن</h2>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="is_enabled_app_bar" checked>
+                            <label for="is_enabled_app_bar">فعال بودن نوار بالای اپلیکیشن</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="app_bar_title">عنوان نوار اپلیکیشن:</label>
+                            <input type="text" id="app_bar_title" value="متن عنوان اپ بار">
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="is_enabled_share_button" checked>
+                            <label for="is_enabled_share_button">فعال بودن دکمه اشتراک‌گذاری</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4: Drawer Menu -->
+                    <div class="step" id="step-4">
+                        <h2 class="step-title">تنظیمات منوی کشویی</h2>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="is_enabled_drawer_menu" checked>
+                            <label for="is_enabled_drawer_menu">فعال بودن منوی کشویی</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="header_title">عنوان هدر:</label>
+                            <input type="text" id="header_title" value="متن هدر منوی کشویی">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="header_sub_title">زیرعنوان هدر:</label>
+                            <input type="text" id="header_sub_title" value="زیر متن منوی کشویی">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>آیتم‌های منو:</label>
+                            <div class="dynamic-list" id="drawer_items_list">
+                                <!-- Items will be added here dynamically -->
+                            </div>
+                            <button type="button" class="btn btn-add btn-small" id="add_drawer_item">
+                                <i class="fas fa-plus"></i> افزودن آیتم جدید
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 5: Nav Bar -->
+                    <div class="step" id="step-5">
+                        <h2 class="step-title">تنظیمات نوار پیمایش پایین صفحه</h2>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="is_enabled_nav_bar" checked>
+                            <label for="is_enabled_nav_bar">فعال بودن نوار پیمایش</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>صفحه‌ها:</label>
+                            <div class="dynamic-list" id="pages_list">
+                                <!-- Pages will be added here dynamically -->
+                            </div>
+                            <button type="button" class="btn btn-add btn-small" id="add_page">
+                                <i class="fas fa-plus"></i> افزودن صفحه جدید
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 6: Preview and Generate -->
+                    <div class="step" id="step-6">
+                        <h2 class="step-title">پیش‌نمایش و تولید فایل JSON</h2>
+                        
+                        <div class="form-group">
+                            <label>پیش‌نمایش JSON:</label>
+                            <p>فایل را دانلود کنید. آخرین مرحله ، آپلود فایل کانفیگ در مسیر  https://your_site.ir/config_app.json است که به جای عبارت your_site.ir آدرس وبسایت شما قرار می گیرد و این آدرس باید مستقیما فایل کانفیگ را باز کند.</p>
+                            <div class="json-preview">
+                                <pre id="json_preview"></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success" id="download_json">
+                                <i class="fas fa-download"></i> دانلود فایل کانفیگ
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="copy_json">
+                                <i class="fas fa-copy"></i> کپی JSON
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="wizard-actions">
+                        <button type="button" class="btn btn-secondary" id="prev-btn" disabled>
+                            <i class="fas fa-arrow-right"></i> مرحله قبل
+                        </button>
+                        <button type="button" class="btn btn-primary" id="next-btn">
+                            مرحله بعد <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div style="text-align: center; color: #666; margin-top: 20px;">
+            <p>طراحی شده با <i class="fas fa-heart" style="color: #6345a0;"></i> | ناپیکس</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Current step tracker
+            let currentStep = 1;
+            const totalSteps = 6;
+            
+            // DOM elements
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const steps = document.querySelectorAll('.step');
+            const progressSteps = document.querySelectorAll('.progress-step');
+            const jsonPreview = document.getElementById('json_preview');
+            
+            // Initialize dynamic lists
+            initDrawerItems();
+            initPages();
+            
+            // Color picker synchronization
+            const colorPicker = document.getElementById('primary_color');
+            const colorText = document.getElementById('primary_color_text');
+            
+            colorPicker.addEventListener('input', function() {
+                colorText.value = this.value;
+                updateProgressColor(this.value);
+            });
+            
+            colorText.addEventListener('input', function() {
+                colorPicker.value = this.value;
+                updateProgressColor(this.value);
+            });
+            
+            function updateProgressColor(color) {
+                // Update active step color
+                document.querySelectorAll('.progress-step.active::before').forEach(el => {
+                    el.style.backgroundColor = color;
+                });
+                
+                // Update header background
+                document.querySelector('header').style.background = `linear-gradient(135deg, ${color} 0%, ${adjustColor(color, -30)} 100%)`;
+            }
+            
+            function adjustColor(color, amount) {
+                const clamp = (val) => Math.min(Math.max(val, 0), 255);
+                
+                // If color is in hex format
+                if (color.startsWith('#')) {
+                    let r = parseInt(color.substr(1, 2), 16);
+                    let g = parseInt(color.substr(3, 2), 16);
+                    let b = parseInt(color.substr(5, 2), 16);
+                    
+                    r = clamp(r + amount);
+                    g = clamp(g + amount);
+                    b = clamp(b + amount);
+                    
+                    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+                }
+                
+                return color;
+            }
+            
+            // Navigation functions
+            function goToStep(step) {
+                // Hide all steps
+                steps.forEach(s => s.classList.remove('active'));
+                progressSteps.forEach(s => {
+                    s.classList.remove('active');
+                    if (parseInt(s.dataset.step) < step) {
+                        s.classList.add('completed');
+                    } else {
+                        s.classList.remove('completed');
+                    }
+                });
+                
+                // Show current step
+                document.getElementById(`step-${step}`).classList.add('active');
+                document.querySelector(`.progress-step[data-step="${step}"]`).classList.add('active');
+                
+                // Update buttons
+                prevBtn.disabled = step === 1;
+                
+                if (step === totalSteps) {
+                    nextBtn.classList.add('hidden');
+                    generateJSONPreview();
+                } else {
+                    nextBtn.classList.remove('hidden');
+                    nextBtn.textContent = step === totalSteps - 1 ? 'تولید JSON' : 'مرحله بعد';
+                    nextBtn.innerHTML = step === totalSteps - 1 ? 
+                        'تولید JSON <i class="fas fa-arrow-left"></i>' : 
+                        'مرحله بعد <i class="fas fa-arrow-left"></i>';
+                }
+                
+                currentStep = step;
+            }
+            
+            // Navigation event listeners
+            prevBtn.addEventListener('click', function() {
+                if (currentStep > 1) {
+                    goToStep(currentStep - 1);
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentStep < totalSteps) {
+                    // Validate current step before proceeding
+                    if (validateStep(currentStep)) {
+                        goToStep(currentStep + 1);
+                    }
+                }
+            });
+            
+            // Progress steps click event
+            progressSteps.forEach(step => {
+                step.addEventListener('click', function() {
+                    const stepNumber = parseInt(this.dataset.step);
+                    if (stepNumber < currentStep) {
+                        goToStep(stepNumber);
+                    }
+                });
+            });
+            
+            // Step validation
+            function validateStep(step) {
+                let isValid = true;
+                
+                if (step === 1) {
+                    const appName = document.getElementById('app_name').value.trim();
+                    if (!appName) {
+                        document.getElementById('app_name_error').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        document.getElementById('app_name_error').style.display = 'none';
+                    }
+                }
+                
+                return isValid;
+            }
+            
+            // Initialize drawer items
+            function initDrawerItems() {
+                const drawerItemsList = document.getElementById('drawer_items_list');
+                const addDrawerItemBtn = document.getElementById('add_drawer_item');
+                
+                // Add default items
+                const defaultItems = [
+                    { name: "عنوان گزینه ۱", link: "با انتخاب گزینه ۱ این لینک باز میشود" },
+                    { name: "عنوان گزینه ۲", link: "با انتخاب گزینه ۲ این لینک باز میشود" },
+                    { name: "عنوان گزینه ۳", link: "با انتخاب گزینه ۳ این لینک باز میشود" }
+                ];
+                
+                defaultItems.forEach(item => addDrawerItem(item.name, item.link));
+                
+                addDrawerItemBtn.addEventListener('click', function() {
+                    addDrawerItem();
+                });
+                
+                function addDrawerItem(name = "", link = "") {
+                    const itemId = Date.now();
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'list-item';
+                    itemElement.id = `drawer-item-${itemId}`;
+                    
+                    itemElement.innerHTML = `
+                        <div class="list-item-header">
+                            <span>آیتم منو</span>
+                            <button type="button" class="btn btn-remove btn-small remove-drawer-item">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label>عنوان:</label>
+                            <input type="text" class="drawer-item-name" value="${name}" placeholder="عنوان گزینه">
+                        </div>
+                        <div class="form-group">
+                            <label>لینک:</label>
+                            <input type="text" class="drawer-item-link" value="${link}" placeholder="آدرس لینک">
+                        </div>
+                    `;
+                    
+                    drawerItemsList.appendChild(itemElement);
+                    
+                    // Add event listener to remove button
+                    itemElement.querySelector('.remove-drawer-item').addEventListener('click', function() {
+                        if (drawerItemsList.children.length > 1) {
+                            itemElement.remove();
+                        } else {
+                            alert('حداقل باید یک آیتم در منو وجود داشته باشد');
+                        }
+                    });
+                }
+            }
+            
+            // Initialize pages
+            function initPages() {
+                const pagesList = document.getElementById('pages_list');
+                const addPageBtn = document.getElementById('add_page');
+                
+                // Add default pages
+                const defaultPages = [
+                    { title: "نام صفحه ۱", link: "آدرس صفحه ۱", is_home: false },
+                    { title: "نام صفحه ۲", link: "ادرس صفحه ۲", is_home: false },
+                    { title: "صفحه اصلی (اولین صفحه ای که باز می شود)", link: "آدرس صفحه اصلی", is_home: true },
+                    { title: "نام صفحه ۳", link: "آدرس صفحه ۳", is_home: false },
+                    { title: "نام صفحه ۴", link: "آدرس صفحه ۴", is_home: false }
+                ];
+                
+                defaultPages.forEach(page => addPage(page.title, page.link, page.is_home));
+                
+                addPageBtn.addEventListener('click', function() {
+                    addPage();
+                });
+                
+                function addPage(title = "", link = "", isHome = false) {
+                    const pageId = Date.now();
+                    const pageElement = document.createElement('div');
+                    pageElement.className = 'list-item';
+                    pageElement.id = `page-${pageId}`;
+                    
+                    pageElement.innerHTML = `
+                        <div class="list-item-header">
+                            <span>صفحه</span>
+                            <button type="button" class="btn btn-remove btn-small remove-page">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label>عنوان:</label>
+                            <input type="text" class="page-title" value="${title}" placeholder="نام صفحه">
+                        </div>
+                        <div class="form-group">
+                            <label>لینک:</label>
+                            <input type="text" class="page-link" value="${link}" placeholder="آدرس صفحه">
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="radio" name="home_page" class="page-is-home" ${isHome ? 'checked' : ''}>
+                            <label>صفحه اصلی (اولین صفحه)</label>
+                        </div>
+                    `;
+                    
+                    pagesList.appendChild(pageElement);
+                    
+                    // Add event listener to remove button
+                    pageElement.querySelector('.remove-page').addEventListener('click', function() {
+                        if (pagesList.children.length > 1) {
+                            pageElement.remove();
+                        } else {
+                            alert('حداقل باید یک صفحه وجود داشته باشد');
+                        }
+                    });
+                    
+                    // Update home page radio buttons
+                    updateHomePageRadios();
+                }
+                
+                function updateHomePageRadios() {
+                    const homeRadios = document.querySelectorAll('.page-is-home');
+                    homeRadios.forEach(radio => {
+                        radio.addEventListener('change', function() {
+                            if (this.checked) {
+                                // Uncheck all other radios
+                                homeRadios.forEach(r => {
+                                    if (r !== this) r.checked = false;
+                                });
+                            }
+                        });
+                    });
+                }
+            }
+            
+            // Generate JSON preview
+            function generateJSONPreview() {
+                // Collect data from form
+                const jsonData = {
+                    basic_info: {
+                        app_name: document.getElementById('app_name').value,
+                        brand_slogan: document.getElementById('brand_slogan').value,
+                        primary_color: document.getElementById('primary_color').value
+                    },
+                    offline_mode: {
+                        message: document.getElementById('offline_message').value,
+                        btn_title: document.getElementById('btn_title').value,
+                        btn_link: document.getElementById('btn_link').value
+                    },
+                    app_bar: {
+                        is_enabled_app_bar: document.getElementById('is_enabled_app_bar').checked,
+                        app_bar_title: document.getElementById('app_bar_title').value,
+                        is_enabled_share_button: document.getElementById('is_enabled_share_button').checked
+                    },
+                    drawer_menu: {
+                        is_enabled_drawer_menu: document.getElementById('is_enabled_drawer_menu').checked,
+                        header_title: document.getElementById('header_title').value,
+                        header_sub_title: document.getElementById('header_sub_title').value,
+                        items: []
+                    },
+                    nav_bar: {
+                        is_enabled_nav_bar: document.getElementById('is_enabled_nav_bar').checked,
+                        pages: []
+                    }
+                };
+                
+                // Collect drawer items
+                document.querySelectorAll('#drawer_items_list .list-item').forEach(item => {
+                    const name = item.querySelector('.drawer-item-name').value;
+                    const link = item.querySelector('.drawer-item-link').value;
+                    
+                    if (name.trim() && link.trim()) {
+                        jsonData.drawer_menu.items.push({
+                            name: name,
+                            link: link
+                        });
+                    }
+                });
+                
+                // Collect pages
+                document.querySelectorAll('#pages_list .list-item').forEach(item => {
+                    const title = item.querySelector('.page-title').value;
+                    const link = item.querySelector('.page-link').value;
+                    const is_home = item.querySelector('.page-is-home').checked;
+                    
+                    if (title.trim() && link.trim()) {
+                        jsonData.nav_bar.pages.push({
+                            title: title,
+                            link: link,
+                            is_home: is_home
+                        });
+                    }
+                });
+                
+                // Format JSON with syntax highlighting
+                const jsonString = JSON.stringify(jsonData, null, 2);
+                const formattedJson = syntaxHighlight(jsonString);
+                jsonPreview.innerHTML = formattedJson;
+                
+                // Add event listeners for download and copy buttons
+                document.getElementById('download_json').addEventListener('click', function() {
+                    downloadJSON(jsonData);
+                });
+                
+                document.getElementById('copy_json').addEventListener('click', function() {
+                    copyToClipboard(jsonString);
+                });
+            }
+            
+            // JSON syntax highlighting
+            function syntaxHighlight(json) {
+                json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+                    let cls = 'json-value';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'json-key';
+                            match = match.replace(/:$/, '');
+                        } else {
+                            cls = 'json-string';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'json-value';
+                    } else if (/null/.test(match)) {
+                        cls = 'json-value';
+                    }
+                    return '<span class="' + cls + '">' + match + '</span>';
+                });
+            }
+            
+            // Download JSON file
+            function downloadJSON(data) {
+                const jsonString = JSON.stringify(data, null, 2);
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'config_app.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // Show success message
+                alert('فایل با موفقیت دانلود شد');
+            }
+            
+            // Copy JSON to clipboard
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(function() {
+                    alert('با موفقیت کپی شد');
+                }, function(err) {
+                    console.error('خطا در کپی کردن: ', err);
+                    alert('خطا در کپی کردن JSON');
+                });
+            }
+            
+            // Initialize with step 1
+            goToStep(1);
+        });
+    </script>
+</body>
+</html>

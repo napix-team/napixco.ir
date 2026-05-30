@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دانلود اپلیکیشن دمو | ناپیکس</title>
+    <!-- فراخوانی آیکون‌ها -->
+    <link rel="stylesheet" href="https://napix.ir/wp-content/fonts/font-awesome/css/all.min.css">
+    
+    <style>
+        :root {
+            /* رنگ درخواستی شما */
+            --primary-color: #7e5dbe; 
+            /* نسخه تیره‌تر برای هاور */
+            --primary-dark: #644a9b; 
+            --bg-color: #f3f4f6;
+            --text-color: #334155;
+            --card-bg: #ffffff;
+            --box-bg: #f8fafc; /* رنگ پس‌زمینه باکس‌های پلتفرم */
+            --border-color: #e2e8f0;
+        }
+        
+        /* تعریف فونت Vazirmatn */
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Thin.woff2') format('woff2');
+            font-weight: 100;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Light.woff2') format('woff2');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Medium.woff2') format('woff2');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-SemiBold.woff2') format('woff2');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-ExtraBold.woff2') format('woff2');
+            font-weight: 800;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('napix.ir/wp-content/fonts/vazir/Vazirmatn-Black.woff2') format('woff2');
+            font-weight: 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face{
+            font-family:'Font Awesome 6 Free';
+            font-style:normal;
+            font-weight:900;
+            src:url(napix.ir/wp-content/fonts/font-awesome/webfonts/fa-solid-900.woff2) format("woff2"),
+                url(napix.ir/wp-content/fonts/font-awesome/webfonts/fa-solid-900.woff) format("woff")
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 500px; /* کمی عریض‌تر برای جای‌گیری بهتر باکس‌ها */
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(126, 93, 190, 0.15); /* سایه رنگی ملایم */
+            padding: 40px 30px;
+            text-align: center;
+            border-top: 5px solid var(--primary-color); /* نوار رنگی بالا */
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            display: inline-block;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #1e293b;
+        }
+
+        p.description {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        /* استایل باکس‌های دسته‌بندی */
+        .platform-box {
+            background-color: var(--box-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: right; /* تراز راست برای تیترها */
+        }
+
+        .platform-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #1e293b;
+            font-size: 1.1rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .platform-header i {
+            font-size: 1.4rem;
+        }
+        
+        .platform-header .fa-android { color: #3DDC84; }
+        .platform-header .fa-apple { color: #000000; }
+
+        .buttons-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* استایل دکمه‌ها */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* متن راست، آیکون چپ */
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        /* دکمه اصلی (توپر) */
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(126, 93, 190, 0.3);
+        }
+
+        /* دکمه فرعی (دورخط) */
+        .btn-outline {
+            background-color: #fff;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background-color: #fdfbff;
+        }
+        
+        .btn i.arrow-icon {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        footer {
+            margin-top: 10px;
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo">اپ ساز سوئیفت</div>
+        <h1>دریافت اپلیکیشن دمو</h1>
+        <p class="description">
+                        نسخه مناسب تلفن همراه خود را از لینک‌های زیر دریافت کنید و آدرس وبسایت خود را در اپلیکیشن وارد کنید ، به این ترتیب محتوای سایت خود را در قالب اپلیکیشن سوئیفت مشاهده خواهید کرد.
+        </p>
+
+        <!-- باکس نسخه اندروید -->
+        <div class="platform-box">
+            <div class="platform-header">
+                <i class="fab fa-android"></i>
+                <span>نسخه اندروید</span>
+            </div>
+            <div class="buttons-grid">
+                <a href="https://napix.ir/wp-content/uploads/Napix_app.apk" class="btn btn-outline">
+                    <span>دانلود مستقیم (APK)</span>
+                    <i class="fas fa-download arrow-icon"></i>
+                </a>
+                <!-- اگر لینک کافه بازار یا گوگل پلی دارید اینجا اضافه کنید -->
+                <!-- 
+                <a href="#" class="btn btn-outline">
+                    <span>دانلود از کافه بازار</span>
+                    <i class="fas fa-store arrow-icon"></i>
+                </a> 
+                -->
+            </div>
+        </div>
+
+        <!-- باکس نسخه iOS -->
+        <div class="platform-box">
+            <div class="platform-header">
+                <i class="fab fa-apple"></i>
+                <span>نسخه iOS</span>
+            </div>
+            <div class="buttons-grid">
+                <!-- دکمه اول: مثلا سیب‌اپ -->
+                <a href="https://sibapp.com/applications/SwiftApplicationBuilder" class="btn btn-outline">
+                    <span>دانلود از سیب‌اپ</span>
+                    <i class="fas fa-external-link-alt arrow-icon"></i>
+                </a>
+                
+                <a href="https://anardoni.com/ios/app/napixprogrammingteamnapixir" class="btn btn-outline">
+                    <span>دانلود از اناردونی</span>
+                    <i class="fas fa-external-link-alt arrow-icon"></i>
+                </a>
+
+                <a href="https://iapps.ir/app/اپ-ساز-سو-یفت/755870161" class="btn btn-outline">
+                    <span>دانلود از آی اپس</span>
+                    <i class="fas fa-external-link-alt arrow-icon"></i>
+                </a>
+                
+                <a href="https://sibche.com/applications/ap-saz-soyyft" class="btn btn-outline">
+                    <span>دانلود از سیبچه</span>
+                    <i class="fas fa-external-link-alt arrow-icon"></i>
+                </a>
+                
+                </div>
+        </div>
+
+        <footer>
+            &copy; 2025 تمام حقوق محفوظ است | <a href="https://napix.ir" target="_blank">ناپیکس</a>
+        </footer>
+    </div>
+
+</body>
+</html>
